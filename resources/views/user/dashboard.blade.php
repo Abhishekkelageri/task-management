@@ -36,14 +36,52 @@
 
 @section('scripts')
 <script>
-    $('#dashboardLink').click(function() {
-        $('#id-dashboard').show();
-        $('#id-task').hide();
-    });
+    $(document).ready(function() {
+        fetchAssignedTaskCount();
+        fetchCompletedTaskCount();
 
-    $('#tasksLink').click(function() {
-        $('#id-dashboard').hide();
-        $('#id-task').show();
+        function fetchAssignedTaskCount() {
+            $.ajax({
+                url: '/api/user/assigned-task-count', 
+                type: 'GET',
+                success: function(response) {
+                    if (response.status === 200) {
+                        $('.task-count').first().text(response.count);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Failed to retrieve assigned task count.');
+                }
+            });
+        }
+
+        function fetchCompletedTaskCount() {
+            $.ajax({
+                url: '/api/user/completed-task-count',  
+                type: 'GET',
+                success: function(response) {
+                    if (response.status === 200) {
+                        $('.task-count').last().text(response.count); 
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Failed to retrieve completed task count.');
+                }
+            });
+        }
+
+        // Toggle dashboard and task views
+        $('#dashboardLink').click(function() {
+            $('#id-dashboard').show();
+            $('#id-task').hide();
+        });
+
+        $('#tasksLink').click(function() {
+            $('#id-dashboard').hide();
+            $('#id-task').show();
+        });
     });
 </script>
 @endsection

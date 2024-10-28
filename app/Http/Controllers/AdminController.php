@@ -15,6 +15,16 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
+    public function tasks(){
+        $adminId = Auth::id();
+        $users = User::where('created_by', $adminId)->get();
+        return view('admin.tasks', compact('users'));
+    }
+
+    public function users(){
+        return view('admin.users');
+    }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -22,15 +32,14 @@ class AdminController extends Controller
             'password' => 'required|string|min:8',
             'designation' => 'required|string|max:255',
         ]);
-
         if ($validator->fails()) {
             return response()->json([
                 'message' => "Validation errors occured",
                 'errors' => $validator->errors(),
                 'status' => 422
-        ],);
+            ],);
         }
-
+        
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),

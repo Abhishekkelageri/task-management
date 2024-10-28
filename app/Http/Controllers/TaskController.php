@@ -13,20 +13,21 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Task::where('created_by', Auth::id())->get();
+        $tasks = Task::with('assignedUser')->where('created_by', Auth::id())->get();
         return response()->json([
             'tasks' => $tasks,
             'status' => 200
         ],);
     }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'date' => 'required|date',
             'description' => 'required|string',
-            'status' => 'required|in:pending,in_progress,completed',
+            'status' => 'required',
             'assigned_to' => 'required|exists:users,id',
-            'priority' => 'required|string|in:low,medium,high',
+            'priority' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -115,12 +116,15 @@ class TaskController extends Controller
     public function userTasks()
     {
         $user = Auth::user();
-        $tasks = $user->tasks;
+        $tasks = $user->tasks()->with('creator')->get();
+        
         return response()->json([
             'tasks' => $tasks,
             'status' => 200
-        ],);
+        ]);
     }
+
+
 
     //to update the status
 

@@ -51,8 +51,8 @@
         <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
-        <a href="#" id="dashboardLink"><i class="bi bi-house me-2"></i> Dashboard</a>
-        <a href="#" id="tasksLink"><i class="bi bi-list-check me-2"></i> Tasks</a>
+        <a href="/user/dashboard" id="dashboardLink"><i class="bi bi-house me-2"></i> Dashboard</a>
+        <a href="/user/task" id="tasksLink"><i class="bi bi-list-check me-2"></i> Tasks</a>
         <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();" id="logoutLink"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
     </div>
 
@@ -62,7 +62,7 @@
         <nav class="navbar navbar-light bg-light mb-4">
             <div class="container-fluid d-flex flex-column align-items-start">
                 <h3 class="mb-0" style="color: black;font-weight: bold;">Welcome!</h3>
-                <p class="mb-0" style="font-size: 1.25rem; color: black;">Abhishek</p>
+                <p class="mb-0" style="font-size: 1.25rem; color: black;">{{ Auth::user()->name }}</p>
             </div>
         </nav>
 

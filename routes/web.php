@@ -42,9 +42,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/tasks', [AdminController::class, 'tasks'])->name('admin.tasks');
 });
 
 Route::prefix('user')->middleware('auth')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/task', [UserController::class, 'task'])->name('user.task');
+    
 });
 

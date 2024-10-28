@@ -13,6 +13,10 @@ class UserController extends Controller
         return view('user.dashboard');
     }
 
+    public function task(){
+        return view('user.task');
+    }
+
     
     public function getAssignedTaskCount()
     {

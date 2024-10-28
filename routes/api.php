@@ -35,7 +35,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function ()
     Route::delete('/users/{id}', [AdminController::class, 'destroy']);
     Route::get('/user-count', [AdminController::class, 'getUserCount']);
 
-
+    
     Route::get('/tasks', [TaskController::class, 'index']);
     Route::post('/tasks', [TaskController::class, 'store']);
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
@@ -47,7 +47,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function ()
 
 Route::prefix('user')->middleware('auth:sanctum')->group(function () {
     Route::get('/tasks', [TaskController::class, 'userTasks']);
-    Route::get('/assigned-task-count', [UserController::class, 'getAssignedTaskCount']);
+    Route::get('/assigned-task-count', [UserController::class, 'getAssignedTaskCount']); 
     Route::get('/completed-task-count', [UserController::class, 'getCompletedTaskCountByUser']);
 });
 
